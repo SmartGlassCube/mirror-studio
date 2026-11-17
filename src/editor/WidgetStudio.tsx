@@ -166,7 +166,7 @@ export default function WidgetStudio({ editing }: { editing: string }) {
             </Field>
           </div>
           <div className="wstudio-editor">
-            <CodeMirror value={draft.source} height="100%" theme="dark" extensions={extensions} onChange={(source) => set({ source })} basicSetup={{ foldGutter: false }} />
+            <CodeMirror value={draft.source} height="100%" theme={document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'} extensions={extensions} onChange={(source) => set({ source })} basicSetup={{ foldGutter: false }} />
           </div>
           <div className="wstudio-status">
             {compiled.ok ? <span style={{ color: 'var(--ok)' }}>✓ Compiles</span> : <span className="error-text">{compiled.error}</span>}

@@ -1,3 +1,4 @@
+import { Sparkles, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Field } from '../components/fields'
 import { useStudio } from '../store'
@@ -79,13 +80,15 @@ export default function AssistantPanel() {
   return (
     <aside className="assistant">
       <div className="inspector-head">
-        <span className="badge badge--violet">✦ Gemini</span>
+        <span className="type-icon" style={{ '--tone': 'var(--violet)', width: 30, height: 30 } as React.CSSProperties}>
+          <Sparkles size={16} />
+        </span>
         <h3>Assistant</h3>
         <button className="btn btn--small" onClick={() => setShowSettings((v) => !v)}>
           {showSettings ? 'Chat' : 'Settings'}
         </button>
-        <button className="btn btn--ghost btn--icon" onClick={() => toggleAssistant(false)} aria-label="Close assistant">
-          ✕
+        <button className="icon-btn" onClick={() => toggleAssistant(false)} aria-label="Close assistant">
+          <X size={18} />
         </button>
       </div>
 

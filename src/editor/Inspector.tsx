@@ -1,3 +1,4 @@
+import { X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { DataSourceEditor, Field, JsonField, TextContentEditor } from '../components/fields'
 import { builtinWidget } from '../model/catalog'
@@ -33,7 +34,14 @@ export default function Inspector() {
   else if (selection?.kind === 'edge' && project.edges.some((e) => e.id === selection.id)) body = <EdgeInspector id={selection.id} />
   else if (selection?.kind === 'widget') body = <WidgetInspector id={selection.id} pageId={selection.pageId} />
   else body = <SettingsInspector />
-  return <aside className="sidebar sidebar--right">{body}</aside>
+  return (
+    <aside className="panel">
+      <button className="icon-btn panel-close" onClick={() => useStudio.getState().select(null)} aria-label="Close panel" title="Close">
+        <X size={18} />
+      </button>
+      {body}
+    </aside>
+  )
 }
 
 function PageInspector({ id }: { id: string }) {

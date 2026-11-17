@@ -1,10 +1,12 @@
-import { lazy, Suspense, useMemo, useState } from 'react'
+import { AlertTriangle, ChevronDown, ChevronUp, CircleAlert, Info } from 'lucide-react'
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
 import AssistantPanel from './ai/AssistantPanel'
 import Modal from './components/Modal'
 import FlowCanvas from './editor/FlowCanvas'
 import Inspector from './editor/Inspector'
 import PageDesigner from './editor/PageDesigner'
-import Palette from './editor/Palette'
+import NodeCreator from './editor/NodeCreator'
+import Rail from './editor/Rail'
 import TopBar from './editor/TopBar'
 import { lintProject } from './model/lint'
 import { useStudio } from './store'
@@ -18,26 +20,34 @@ function Problems() {
   const project = useStudio((s) => s.project)
   const { select } = useStudio.getState()
   const problems = useMemo(() => lintProject(project), [project])
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const errors = problems.filter((p) => p.level === 'error').length
   const warnings = problems.filter((p) => p.level === 'warning').length
   if (!problems.length) return null
+  const icon = (level: string) =>
+    level === 'error' ? <CircleAlert size={15} className="tone-err" /> : level === 'warning' ? <AlertTriangle size={15} className="tone-warn" /> : <Info size={15} className="tone-faint" />
   return (
-    <div className="problems">
-      <button className="problem" onClick={() => setOpen(!open)} style={{ fontWeight: 600 }}>
-        {open ? '▾' : '▸'} Problems
-        {errors ? <span className="badge badge--err">{errors} error{errors > 1 ? 's' : ''}</span> : null}
-        {warnings ? <span className="badge badge--warn">{warnings} warning{warnings > 1 ? 's' : ''}</span> : null}
-        <span className="badge">{problems.length - errors - warnings} tips</span>
+    <div className={`problems${open ? ' is-open' : ''}`}>
+      <button className="problems-head" onClick={() => setOpen(!open)}>
+        {errors ? <CircleAlert size={15} className="tone-err" /> : warnings ? <AlertTriangle size={15} className="tone-warn" /> : <Info size={15} className="tone-faint" />}
+        <span>
+          {errors ? `${errors} error${errors > 1 ? 's' : ''}` : warnings ? `${warnings} warning${warnings > 1 ? 's' : ''}` : `${problems.length} tip${problems.length > 1 ? 's' : ''}`}
+          {(errors ? warnings + problems.length - errors - warnings : warnings ? problems.length - warnings : 0) > 0
+            ? ` · ${problems.length - (errors || warnings)} more`
+            : ''}
+        </span>
+        {open ? <ChevronDown size={15} /> : <ChevronUp size={15} />}
       </button>
-      {open
-        ? problems.map((p, i) => (
+      {open ? (
+        <div className="problems-list">
+          {problems.map((p, i) => (
             <button key={i} className="problem" onClick={() => (p.edgeId ? select({ kind: 'edge', id: p.edgeId }) : p.pageId ? select({ kind: 'page', id: p.pageId }) : select({ kind: 'settings' }))}>
-              <span style={{ color: p.level === 'error' ? 'var(--err)' : p.level === 'warning' ? 'var(--warn)' : 'var(--faint)' }}>{p.level === 'error' ? '●' : p.level === 'warning' ? '▲' : 'i'}</span>
-              {p.message}
+              {icon(p.level)}
+              <span>{p.message}</span>
             </button>
-          ))
-        : null}
+          ))}
+        </div>
+      ) : null}
     </div>
   )
 }
@@ -70,11 +80,31 @@ export default function App() {
   const designerPageId = useStudio((s) => s.designerPageId)
   const widgetEditor = useStudio((s) => s.widgetEditor)
   const assistantOpen = useStudio((s) => s.assistantOpen)
+  const creatorOpen = useStudio((s) => s.creatorOpen)
+  const selection = useStudio((s) => s.selection)
   const trusted = useStudio((s) => s.trusted)
+
+  // Tab opens the "+" panel (as in n8n); Esc closes the topmost panel.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.target as HTMLElement).closest('input, textarea, select, .cm-editor, .modal')) return
+      const { view, creatorOpen, designerPageId, selection, toggleCreator, select } = useStudio.getState()
+      if (e.key === 'Tab' && view === 'graph' && !e.ctrlKey && !e.altKey) {
+        e.preventDefault()
+        toggleCreator()
+      } else if (e.key === 'Escape' && !designerPageId) {
+        if (creatorOpen) toggleCreator(false)
+        else if (selection) select(null)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
 
   if (!trusted) {
     return (
       <div className="app">
+        <Rail />
         <TopBar />
         <TrustPrompt />
       </div>
@@ -83,23 +113,26 @@ export default function App() {
 
   return (
     <div className="app">
+      <Rail />
       <TopBar />
       {view === 'test' ? (
-        <div style={{ display: 'grid', gridTemplateColumns: assistantOpen ? 'minmax(0, 1fr) 360px' : 'minmax(0, 1fr)', minHeight: 0 }}>
-          <Suspense fallback={<Loading />}>
-            <TestRunner />
-          </Suspense>
+        <div className={`workspace${assistantOpen ? ' has-assistant' : ''}`}>
+          <main className="center">
+            <Suspense fallback={<Loading />}>
+              <TestRunner />
+            </Suspense>
+          </main>
           {assistantOpen ? <AssistantPanel /> : null}
         </div>
       ) : (
-        <div className={`workspace${assistantOpen ? ' workspace--assistant' : ''}`}>
-          <Palette />
+        <div className={`workspace${selection ? ' has-panel' : ''}${assistantOpen ? ' has-assistant' : ''}`}>
           <main className="center">
             <FlowCanvas />
             {designerPageId ? <PageDesigner pageId={designerPageId} /> : null}
+            {creatorOpen ? <NodeCreator /> : null}
             <Problems />
           </main>
-          <Inspector />
+          {selection ? <Inspector /> : null}
           {assistantOpen ? <AssistantPanel /> : null}
         </div>
       )}

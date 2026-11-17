@@ -24,6 +24,7 @@ type State = {
   designerPageId: string | null // the page open in the page designer
   widgetEditor: string | null // custom widget type open in the widget studio ('new' for a new one)
   assistantOpen: boolean
+  creatorOpen: boolean // the "+" panel: add pages and widgets
   past: HistoryEntry[]
   future: HistoryEntry[]
   savedAt: number
@@ -38,6 +39,7 @@ type State = {
   openDesigner: (pageId: string | null) => void
   openWidgetEditor: (type: string | null) => void
   toggleAssistant: (open?: boolean) => void
+  toggleCreator: (open?: boolean) => void
   trust: () => void
 
   // project
@@ -100,6 +102,7 @@ export const useStudio = create<State>()(
         designerPageId: null,
         widgetEditor: null,
         assistantOpen: false,
+        creatorOpen: false,
         past: [],
         future: [],
         savedAt: Date.now(),
@@ -122,6 +125,7 @@ export const useStudio = create<State>()(
         openDesigner: (pageId) => set({ designerPageId: pageId, selection: pageId ? { kind: 'page', id: pageId } : get().selection }),
         openWidgetEditor: (type) => set({ widgetEditor: type }),
         toggleAssistant: (open) => set({ assistantOpen: open ?? !get().assistantOpen }),
+        toggleCreator: (open) => set({ creatorOpen: open ?? !get().creatorOpen }),
         trust: () => set({ trusted: true }),
 
         replaceProject: (project, trusted) => {

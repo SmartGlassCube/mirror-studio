@@ -4,10 +4,12 @@ A no-code editor for gesture-controlled smart mirrors built on the
 [`glasscube`](https://github.com/SmartGlassCube/Smart-Mirror-SDK) Python SDK. Inspired by n8n:
 pages are nodes, the hand gestures that move between them are the links.
 
-- **Build**: drag pages and widgets onto a canvas, link pages by dragging from one to another and
-  picking a gesture (two-finger swipes, open-hand swipes, clicks, pinch, scroll, zoom). A ★ "Any
-  page" node holds gestures that work everywhere. Double-click a page to lay out its widgets on a
-  true-to-scale mirror screen.
+- **Build**: an n8n-style canvas. Press **+** (or Tab) to add pages and widgets, link pages by
+  dragging from one page's dot to another (or with the + next to a page) and pick a gesture
+  (two-finger swipes, open-hand swipes, clicks, pinch, scroll, zoom). The "Any page" node holds
+  gestures that work everywhere; the start page has a rounded side. Double-click a page to lay
+  out its widgets on a true-to-scale mirror screen; Tidy up arranges the graph for you. Light and
+  dark themes.
 - **Widgets**: the SDK's built-ins (text, weather, calendar, news, events, QR gallery, games,
   drawing) with live data sources (Open-Meteo weather, clock, any JSON API, fixed JSON), plus your
   own: write a React component, start from a template, or ask the assistant. **Copy context for

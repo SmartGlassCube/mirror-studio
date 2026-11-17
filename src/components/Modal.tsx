@@ -1,3 +1,4 @@
+import { X } from 'lucide-react'
 import { useEffect, type ReactNode } from 'react'
 
 export default function Modal({ title, onClose, children, small, actions }: { title: ReactNode; onClose: () => void; children: ReactNode; small?: boolean; actions?: ReactNode }) {
@@ -12,8 +13,8 @@ export default function Modal({ title, onClose, children, small, actions }: { ti
         <div className="modal-head">
           <h2>{title}</h2>
           {actions}
-          <button className="btn btn--ghost btn--icon" onClick={onClose} aria-label="Close">
-            ✕
+          <button className="icon-btn" onClick={onClose} aria-label="Close">
+            <X size={18} />
           </button>
         </div>
         {children}

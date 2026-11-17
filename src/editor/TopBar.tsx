@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Check, ChevronDown, ChevronRight, Download, FileJson, FilePlus2, FileText, FolderOpen, LayoutTemplate, MonitorPlay, Redo2, Sparkles, Undo2 } from 'lucide-react'
 import Modal from '../components/Modal'
 import { downloadText, exportProject, fileName, ImportError, parseProject, type ExportFormat } from '../model/io'
 import { useStudio } from '../store'
@@ -22,7 +23,7 @@ export default function TopBar() {
   const canRedo = useStudio((s) => s.future.length > 0)
   const savedAt = useStudio((s) => s.savedAt)
   const assistantOpen = useStudio((s) => s.assistantOpen)
-  const { setView, undo, redo, renameProject, replaceProject, newProject, toggleAssistant, select } = useStudio.getState()
+  const { setView, undo, redo, renameProject, replaceProject, newProject, toggleAssistant } = useStudio.getState()
   const exportMenu = useMenu()
   const newMenu = useMenu()
   const fileInput = useRef<HTMLInputElement>(null)
@@ -65,53 +66,62 @@ export default function TopBar() {
 
   return (
     <header className="topbar">
-      <div className="brand">
-        <img src="/favicon.svg" alt="" />
-        Mirror <span>Studio</span>
+      <div className="crumbs">
+        <span className="crumbs-root">Mirror Studio</span>
+        <ChevronRight size={14} className="crumbs-sep" />
+        <input className="project-name" value={project.name} onChange={(e) => renameProject(e.target.value)} aria-label="Project name" size={Math.max(8, project.name.length)} />
+        <span className="saved-chip" title="Every change is saved in this browser">
+          <Check size={13} /> Saved {new Date(savedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </span>
       </div>
-      <input className="project-name" value={project.name} onChange={(e) => renameProject(e.target.value)} aria-label="Project name" />
-      <div className="tabs">
-        <button className={`tab${view === 'graph' ? ' tab--active' : ''}`} onClick={() => setView('graph')}>
-          Build
+
+      <div className="tabs" role="tablist">
+        <button role="tab" aria-selected={view === 'graph'} className={`tab${view === 'graph' ? ' tab--active' : ''}`} onClick={() => setView('graph')}>
+          Editor
         </button>
-        <button className={`tab${view === 'test' ? ' tab--active' : ''}`} onClick={() => setView('test')}>
-          ▶ Test
+        <button role="tab" aria-selected={view === 'test'} className={`tab${view === 'test' ? ' tab--active' : ''}`} onClick={() => setView('test')}>
+          Test
         </button>
       </div>
-      <button className="btn btn--ghost btn--icon" disabled={!canUndo} onClick={undo} title="Undo (Ctrl+Z)">
-        ↶
-      </button>
-      <button className="btn btn--ghost btn--icon" disabled={!canRedo} onClick={redo} title="Redo (Ctrl+Y)">
-        ↷
-      </button>
-      <span className="saved" title="Saved in this browser">
-        ✓ Saved {new Date(savedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-      </span>
-      <span className="topbar-spacer" />
-      <button className="btn btn--ghost" onClick={() => select({ kind: 'settings' })}>
-        ⚙ Project
-      </button>
-      <div className="menu" ref={newMenu.ref}>
-        <button className="btn" onClick={() => newMenu.setOpen(!newMenu.open)}>
-          New ▾
+
+      <div className="topbar-actions">
+        <button className="icon-btn" disabled={!canUndo} onClick={undo} title="Undo (Ctrl+Z)">
+          <Undo2 size={17} />
         </button>
-        {newMenu.open ? (
-          <div className="menu-list">
-            <button onClick={() => (confirm('Start a blank project? Export this one first if you want to keep it.') && newProject('blank'), newMenu.setOpen(false))}>
-              Blank project
-              <small>One empty page</small>
-            </button>
-            <button onClick={() => (confirm('Open the demo? It replaces the current project.') && newProject('demo'), newMenu.setOpen(false))}>
-              Demo mirror
-              <small>Three pages, gestures, two custom widgets</small>
-            </button>
-            <button onClick={() => (fileInput.current?.click(), newMenu.setOpen(false))}>
-              Open a file…
-              <small>.json or .yaml exported from the studio</small>
-            </button>
-          </div>
-        ) : null}
-      </div>
+        <button className="icon-btn" disabled={!canRedo} onClick={redo} title="Redo (Ctrl+Y)">
+          <Redo2 size={17} />
+        </button>
+        <span className="topbar-divider" />
+        <div className="menu" ref={newMenu.ref}>
+          <button className="btn" onClick={() => newMenu.setOpen(!newMenu.open)}>
+            <FilePlus2 size={15} /> New <ChevronDown size={14} />
+          </button>
+          {newMenu.open ? (
+            <div className="menu-list">
+              <button onClick={() => (confirm('Start a blank project? Export this one first if you want to keep it.') && newProject('blank'), newMenu.setOpen(false))}>
+                <FilePlus2 size={16} />
+                <span>
+                  Blank project
+                  <small>One empty page</small>
+                </span>
+              </button>
+              <button onClick={() => (confirm('Open the demo? It replaces the current project.') && newProject('demo'), newMenu.setOpen(false))}>
+                <LayoutTemplate size={16} />
+                <span>
+                  Demo mirror
+                  <small>Three pages, gestures, two custom widgets</small>
+                </span>
+              </button>
+              <button onClick={() => (fileInput.current?.click(), newMenu.setOpen(false))}>
+                <FolderOpen size={16} />
+                <span>
+                  Open a file…
+                  <small>.json or .yaml exported from the studio</small>
+                </span>
+              </button>
+            </div>
+          ) : null}
+        </div>
       <input
         ref={fileInput}
         type="file"
@@ -123,30 +133,40 @@ export default function TopBar() {
           e.target.value = ''
         }}
       />
-      <div className="menu" ref={exportMenu.ref}>
-        <button className="btn" onClick={() => exportMenu.setOpen(!exportMenu.open)}>
-          Export ▾
+        <div className="menu" ref={exportMenu.ref}>
+          <button className="btn btn--primary" onClick={() => exportMenu.setOpen(!exportMenu.open)}>
+            <Download size={15} /> Export <ChevronDown size={14} />
+          </button>
+          {exportMenu.open ? (
+            <div className="menu-list">
+              <button onClick={() => doExport('json')}>
+                <FileJson size={16} />
+                <span>
+                  Download JSON
+                  <small>Everything, including widget code (Ctrl+S)</small>
+                </span>
+              </button>
+              <button onClick={() => doExport('yaml')}>
+                <FileText size={16} />
+                <span>
+                  Download YAML
+                  <small>Same content, easier to read and diff</small>
+                </span>
+              </button>
+              <button onClick={() => (setRunHelp(true), exportMenu.setOpen(false))}>
+                <MonitorPlay size={16} />
+                <span>
+                  Run it on a mirror…
+                  <small>With the glasscube Python package</small>
+                </span>
+              </button>
+            </div>
+          ) : null}
+        </div>
+        <button className={`btn btn--ai${assistantOpen ? ' is-active' : ''}`} onClick={() => toggleAssistant()}>
+          <Sparkles size={15} /> Ask AI
         </button>
-        {exportMenu.open ? (
-          <div className="menu-list">
-            <button onClick={() => doExport('json')}>
-              Download JSON
-              <small>Everything, including widget code (Ctrl+S)</small>
-            </button>
-            <button onClick={() => doExport('yaml')}>
-              Download YAML
-              <small>Same content, easier to read and diff</small>
-            </button>
-            <button onClick={() => (setRunHelp(true), exportMenu.setOpen(false))}>
-              Run it on a mirror…
-              <small>With the glasscube Python package</small>
-            </button>
-          </div>
-        ) : null}
       </div>
-      <button className={`btn${assistantOpen ? ' btn--primary' : ''}`} onClick={() => toggleAssistant()}>
-        ✦ Assistant
-      </button>
 
       {importError ? (
         <Modal small title="Can't open this file" onClose={() => setImportError(null)}>
