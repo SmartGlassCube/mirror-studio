@@ -1,0 +1,146 @@
+/* The mirror's look (Smart-Mirror-SDK/frontend/src/index.css + mirror/mirror.css), scoped to a box:
+   --u is one design pixel, computed from the frame's size instead of the browser window. */
+
+.mirror-fit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+}
+
+.mirror-frame {
+  position: relative;
+  flex: none;
+  /* the frame's own size is what --u below measures */
+  container-type: size;
+  background: #000;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px var(--line), 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+
+.mirror-screen {
+  --px-black: #000000;
+  --px-silver: #d5d5d5;
+  --px-orange: #fd7a33;
+  --px-purple: #ab32ac;
+  --px-indigo: #4341aa;
+  --design-width: 1080;
+  --design-height: 950;
+  --u: min(100cqw / var(--design-width), 100cqh / var(--design-height));
+  --px: calc(var(--u) * 4);
+  --font-pixel-title: 'Press Start 2P', monospace;
+  --font-pixel-body: 'VT323', monospace;
+  --drag-handle-height: calc(var(--u) * 24);
+
+  position: absolute;
+  inset: 0;
+  font-family: var(--font-pixel-body);
+  font-size: calc(var(--u) * 26);
+  line-height: 1.2;
+  font-weight: 400;
+  color: var(--px-silver);
+  background-color: var(--px-black);
+  -webkit-font-smoothing: none;
+  text-align: left;
+}
+
+.mirror-screen a {
+  color: var(--px-orange);
+}
+
+.mirror-page {
+  position: absolute;
+  inset: 0;
+  container-type: size;
+}
+
+.widget-slot {
+  --slot-margin: calc(var(--px) * 3);
+  --slot-margin-top: calc(var(--slot-margin) + var(--drag-handle-height) + var(--px));
+  position: absolute;
+  left: calc(var(--x) * 100%);
+  top: calc(var(--y) * 100%);
+  width: max-content;
+  translate:
+    clamp(calc(var(--slot-margin) - var(--x) * 100cqw), -50%, calc((1 - var(--x)) * 100cqw - 100% - var(--slot-margin)))
+    clamp(calc(var(--slot-margin-top) - var(--y) * 100cqh), -50%, calc((1 - var(--y)) * 100cqh - 100% - var(--slot-margin)));
+  transition: left 0.08s linear, top 0.08s linear;
+}
+
+.widget-slot--dragging {
+  z-index: 100;
+  transition: none;
+}
+
+/* Design mode: whole widget is a drag handle; its own controls don't steal the pointer. */
+.widget-slot--design {
+  cursor: grab;
+  transition: none;
+}
+.widget-slot--design > *:not(.drag-handle) {
+  pointer-events: none;
+}
+.widget-slot--selected {
+  z-index: 50;
+}
+.widget-slot--selected::after {
+  content: '';
+  position: absolute;
+  inset: calc(var(--px) * -2);
+  border: 2px dashed var(--accent, #ff6d5a);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.widget-error {
+  border: 0;
+  color: #ffb4a8;
+  max-width: calc(var(--u) * 340);
+  overflow-wrap: anywhere;
+}
+
+.drag-handle {
+  position: absolute;
+  bottom: calc(100% + var(--px));
+  left: 50%;
+  width: calc(var(--drag-handle-height) * 2);
+  height: var(--drag-handle-height);
+  transform: translateX(-50%);
+}
+.drag-handle__outline {
+  fill: var(--px-silver);
+}
+.drag-handle__fill {
+  fill: var(--px-indigo);
+}
+.drag-handle__shine {
+  fill: var(--px-purple);
+}
+.drag-handle--lit {
+  filter: drop-shadow(0 0 calc(var(--u) * 6) var(--px-orange));
+}
+.drag-handle--lit .drag-handle__fill {
+  fill: var(--px-orange);
+}
+
+/* Hand cursor (test mode) */
+.hand-cursor {
+  position: absolute;
+  z-index: 200;
+  width: calc(var(--u) * 26);
+  height: calc(var(--u) * 26);
+  box-sizing: border-box;
+  border: calc(var(--u) * 3) solid var(--px-silver);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0.7;
+}
+.hand-cursor--pinching {
+  border-color: var(--px-orange);
+  background: rgba(253, 122, 51, 0.35);
+}

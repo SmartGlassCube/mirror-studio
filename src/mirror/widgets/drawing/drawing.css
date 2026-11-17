@@ -1,0 +1,51 @@
+/* Two classes: beats .widget's max-width whatever order the stylesheets load in. */
+.widget.drawing-widget {
+  max-width: none;
+}
+
+/* Title left, the controls on the same line to the right: every bit of height goes to the canvas. */
+.drawing-widget h2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--px) * 6);
+}
+
+.drawing-hint {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--px) * 5);
+  font-family: var(--font-pixel-body);
+  font-size: calc(var(--u) * 22);
+  color: var(--px-silver);
+  text-shadow: none;
+}
+
+/* Current brush: its colour, with the size written on it. */
+.drawing-swatch {
+  min-width: calc(var(--px) * 6);
+  padding: 0 var(--px);
+  font-family: var(--font-pixel-title);
+  font-size: calc(var(--u) * 12);
+  line-height: calc(var(--px) * 6);
+  text-align: center;
+  color: var(--px-black);
+}
+
+/* The widget sits in the top-left corner (pages.py) and the canvas fills the rest of the page
+   (cqw/cqh, see .mirror-page), keeping clear of, in --u:
+   - width: the page margin (12) on the left; the camera preview (12 + 160) plus a gap (12) on
+     the right; the panel's padding and border (32).
+   - height: the top margin (40, see .widget-slot); the panel's title row, padding and border
+     (76); Abdo (300 + 4) and a gap (10) at the bottom.
+   Works the same on the portrait mirror and in a 1920x1080 window. */
+.drawing-canvas {
+  display: block;
+  width: max(40cqw, calc(100cqw - var(--u) * 228));
+  height: max(30cqh, calc(100cqh - var(--u) * 430));
+  background: rgba(0, 0, 0, 0.45);
+  image-rendering: pixelated;
+  /* Not a layout gap: DrawingWidget reads it back as the size of one canvas pixel, so strokes
+     are drawn on the same 8-bit grid as the rest of the UI (--px). */
+  column-gap: var(--px);
+}

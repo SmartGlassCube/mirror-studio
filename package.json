@@ -1,0 +1,38 @@
+{
+  "name": "smart-mirror-studio",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "predev": "node scripts/copy-mediapipe.mjs",
+    "dev": "vite",
+    "prebuild": "node scripts/copy-mediapipe.mjs",
+    "build": "tsc -b && vite build",
+    "typecheck": "tsc -b",
+    "test": "vitest run",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.5",
+    "@fontsource/press-start-2p": "^5.3.0",
+    "@fontsource/vt323": "^5.3.0",
+    "@mediapipe/tasks-vision": "^0.10.35",
+    "@uiw/react-codemirror": "^4.25.12",
+    "@xyflow/react": "^12.12.1",
+    "js-yaml": "^4.3.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "sucrase": "^3.35.1",
+    "zustand": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "typescript": "~5.9",
+    "vite": "^7.3.8",
+    "vitest": "^3.2.7"
+  }
+}
