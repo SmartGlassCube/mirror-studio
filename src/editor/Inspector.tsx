@@ -325,7 +325,7 @@ function SettingsInspector() {
 
         <div className="divider" />
         <div className="hint">
-          Your work is saved in this browser automatically. Export it (top right) to keep a copy, share it, or run it on a mirror with the <code>smartmirror</code> Python package.
+          Your work is saved in this browser automatically. Export it (top right) to keep a copy, share it, or run it on a mirror with the <code>glasscube</code> Python package.
         </div>
       </div>
     </>

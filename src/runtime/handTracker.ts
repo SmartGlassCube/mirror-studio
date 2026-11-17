@@ -1,7 +1,7 @@
 import { FilesetResolver, HandLandmarker } from '@mediapipe/tasks-vision'
 import { emptyHand, handFromLandmarks, type Hands, type Landmark } from './gestureEngine'
 
-// The same model the SDK downloads (smartmirror/vision/landmark_detector.py).
+// The same model the SDK downloads (glasscube/vision/landmark_detector.py).
 const MODEL_URL = 'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task'
 
 let landmarkerPromise: Promise<HandLandmarker> | null = null

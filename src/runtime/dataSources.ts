@@ -46,7 +46,7 @@ async function fetchSource(source: DataSource): Promise<unknown> {
     case 'clock':
       return clockData(source.hour12)
     case 'weather': {
-      // Same request and shape as smartmirror/widgets/providers/open_meteo.py
+      // Same request and shape as glasscube/widgets/providers/open_meteo.py
       const query = new URLSearchParams({
         latitude: String(source.latitude),
         longitude: String(source.longitude),

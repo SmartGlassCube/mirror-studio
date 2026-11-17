@@ -206,7 +206,7 @@ export default function WidgetStudio({ editing }: { editing: string }) {
             <DataSourceEditor source={draft.defaultData} onChange={(defaultData) => set({ defaultData })} />
             <JsonField label="Default props (widget.metadata)" value={draft.defaultProps} onChange={(defaultProps) => set({ defaultProps: defaultProps as Record<string, unknown> })} rows={6} hint="New copies of this widget start with these; each copy can change them in the inspector." />
             <div className="hint">
-              Runs as a React component in the studio and, from smartmirror 0.2.0, on the mirror. Only <code>react</code> can be imported; data comes from the data source.
+              Runs as a React component in the studio and, from glasscube 0.2.0, on the mirror. Only <code>react</code> can be imported; data comes from the data source.
             </div>
           </div>
         </div>

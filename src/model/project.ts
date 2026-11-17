@@ -1,9 +1,9 @@
 // The studio's project: everything needed to rebuild a mirror. Saved in the browser, exported as
-// JSON or YAML, and (from smartmirror 0.2.0) run on a real mirror by `smartmirror run <file>`.
+// JSON or YAML, and (from glasscube 0.2.0) run on a real mirror by `glasscube run <file>`.
 // Mapping to the SDK: pages = graph nodes, edges = graph edges, bindings = StateManager
 // event_bindings, widgets = BaseWidget(widget_type, position, content, metadata=props, data_provider).
 
-export const PROJECT_FORMAT = 'smartmirror-project'
+export const PROJECT_FORMAT = 'glasscube-project'
 export const PROJECT_VERSION = 1
 
 export type XY = { x: number; y: number }
@@ -92,7 +92,7 @@ export type Project = {
   widgetTypes: CustomWidgetType[]
 }
 
-// smartmirror/config/json_config/default_gesture_config.json
+// glasscube/config/json_config/default_gesture_config.json
 export const DEFAULT_GESTURE_CONFIG: GestureConfig = {
   target_radius: 0.35,
   swipe_cooldown: 0.3,

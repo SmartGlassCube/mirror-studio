@@ -1,7 +1,7 @@
 # Smart Mirror Studio
 
 A no-code editor for gesture-controlled smart mirrors built on the
-[`smartmirror`](https://github.com/SmartGlassCube/Smart-Mirror-SDK) Python SDK. Inspired by n8n:
+[`glasscube`](https://github.com/SmartGlassCube/Smart-Mirror-SDK) Python SDK. Inspired by n8n:
 pages are nodes, the hand gestures that move between them are the links.
 
 - **Build**: drag pages and widgets onto a canvas, link pages by dragging from one to another and
@@ -19,7 +19,7 @@ pages are nodes, the hand gestures that move between them are the links.
   button or the keyboard (arrows = two-finger swipes, Shift+arrows = open hand, C/V = clicks).
 - **Assistant**: Gemini Flash-Lite (Google AI Studio) answers questions, writes widgets, and edits
   the project. It proposes a list of changes that you apply in one undoable step.
-- **No accounts**: work autosaves in the browser (localStorage). Export a `.smartmirror.json` or
+- **No accounts**: work autosaves in the browser (localStorage). Export a `.glasscube.json` or
   `.yaml` file to keep it, share it, or run it on a mirror; import it back anytime.
 - **Problems panel**: unreachable pages, dead ends, two links on one gesture, gestures that collide
   with widget controls.
@@ -66,7 +66,7 @@ call Google straight from the browser, so their key never reaches the server.
 | `widgetTypes[]` (`source` TSX + `compiled` JS in exports) | a frontend widget loaded at runtime |
 | `settings.gestureConfig` | `StateManager(gesture_config=…)` |
 
-`smartmirror run <file>` (planned for SDK 0.2.0) will run an exported file on a real mirror.
+`glasscube run <file>` (planned for SDK 0.2.0) will run an exported file on a real mirror.
 
 ## Layout
 
@@ -74,7 +74,7 @@ call Google straight from the browser, so their key never reaches the server.
 |---|---|
 | `src/editor/` | Canvas (React Flow), palette, inspector, page designer, widget studio, top bar |
 | `src/mirror/` | The mirror's own widget components and styles (copied from the SDK's `frontend/`), `MirrorScreen`, the custom widget compiler (sucrase) |
-| `src/runtime/` | Gesture engine + state simulator (ports of `smartmirror/vision` and `smartmirror/core`), MediaPipe hand tracking, data sources |
+| `src/runtime/` | Gesture engine + state simulator (ports of `glasscube/vision` and `glasscube/core`), MediaPipe hand tracking, data sources |
 | `src/test/` | The Test view |
 | `src/ai/` | Gemini client, assistant panel, project actions, coding-agent context |
 | `src/model/` | Project types, catalog, templates, import/export, lint |

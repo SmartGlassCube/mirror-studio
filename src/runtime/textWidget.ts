@@ -1,4 +1,4 @@
-// Port of smartmirror/widgets/text.py: what a TextWidget shows for a navigation state.
+// Port of glasscube/widgets/text.py: what a TextWidget shows for a navigation state.
 
 export type TextNav = { key: number; item: number }
 

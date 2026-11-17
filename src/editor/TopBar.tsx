@@ -139,7 +139,7 @@ export default function TopBar() {
             </button>
             <button onClick={() => (setRunHelp(true), exportMenu.setOpen(false))}>
               Run it on a mirror…
-              <small>With the smartmirror Python package</small>
+              <small>With the glasscube Python package</small>
             </button>
           </div>
         ) : null}
@@ -160,10 +160,10 @@ export default function TopBar() {
           <div className="modal-body">
             <p>On the mirror's computer (a Raspberry Pi, a laptop…) with a webcam:</p>
             <pre className="textarea" style={{ whiteSpace: 'pre-wrap', minHeight: 0 }}>
-              {`pip install smartmirror\nsmartmirror run ${fileName(project, 'json')}`}
+              {`pip install glasscube\nglasscube run ${fileName(project, 'json')}`}
             </pre>
             <p className="hint">
-              Then open <code>http://localhost:8080</code> full screen. <code>smartmirror run</code> arrives in smartmirror 0.2.0; with 0.1.0, use the export as the blueprint for your Python graph (pages = nodes, links = edges).
+              Then open <code>http://localhost:8080</code> full screen. <code>glasscube run</code> arrives in glasscube 0.2.0; with 0.1.0, use the export as the blueprint for your Python graph (pages = nodes, links = edges).
             </p>
           </div>
         </Modal>

@@ -1,4 +1,4 @@
-// Wire format sent by the Python backend: see docs/protocol.md (backend/smartmirror/server/websocket.py).
+// Wire format sent by the Python backend: see docs/protocol.md (backend/glasscube/server/websocket.py).
 
 export type Position = {
   x?: number

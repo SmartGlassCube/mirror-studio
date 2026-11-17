@@ -39,7 +39,7 @@ export function widgetAgentContext(brief: WidgetBrief = {}): string {
   return `# Writing a Smart Mirror widget
 
 You are writing one React component for a gesture-controlled smart mirror (the open-source
-\`smartmirror\` SDK, https://github.com/SmartGlassCube/Smart-Mirror-SDK). It is designed in Smart
+\`glasscube\` SDK, https://github.com/SmartGlassCube/Smart-Mirror-SDK). It is designed in Smart
 Mirror Studio and later runs unchanged on the mirror's display (a 1080×1920 portrait screen behind
 two-way glass, so black is see-through and bright colours glow).
 

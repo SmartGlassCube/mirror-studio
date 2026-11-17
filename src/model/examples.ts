@@ -28,7 +28,7 @@ export function demoProject(): Project {
         { ...newWidgetInstance('clock', { content: null, props: clock.defaultProps, data: clock.defaultData, refreshInterval: 1, draggable: true }, { x: 0.5, y: 0.12 }) },
         builtin('weather', { x: 0.25, y: 0.36 }),
         { ...newWidgetInstance('greeting', { content: null, props: { name: 'maker' }, data: greeting.defaultData, refreshInterval: 60, draggable: true }, { x: 0.72, y: 0.36 }) },
-        builtin('text', { x: 0.5, y: 0.62 }, { content: { tips: ['Two fingers → swipe: agenda', 'Two fingers ← swipe: drawing', 'Open hand swipe: next tip'], about: ['Built in Smart Mirror Studio', 'Runs on the smartmirror SDK'] } }),
+        builtin('text', { x: 0.5, y: 0.62 }, { content: { tips: ['Two fingers → swipe: agenda', 'Two fingers ← swipe: drawing', 'Open hand swipe: next tip'], about: ['Built in Smart Mirror Studio', 'Runs on the glasscube SDK'] } }),
       ],
     },
     {

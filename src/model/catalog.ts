@@ -1,7 +1,7 @@
 import type { DataSource, WidgetInstance } from './project'
 import { uid } from './project'
 
-// The widget types built into the SDK (smartmirror.widgets + the mirror UI's widgets/ folder).
+// The widget types built into the SDK (glasscube.widgets + the mirror UI's widgets/ folder).
 export type BuiltinWidget = {
   type: string
   name: string

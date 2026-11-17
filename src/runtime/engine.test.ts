@@ -125,6 +125,13 @@ describe('projects', () => {
     expect(() => parseProject('not: [valid')).toThrow()
   })
 
+  it('still opens files exported before the glasscube rename', () => {
+    const project = demoProject()
+    const old = exportProject(project, 'json').replace('"glasscube-project"', '"smartmirror-project"')
+    expect(old).toContain('"smartmirror-project"')
+    expect(parseProject(old).pages).toEqual(project.pages)
+  })
+
   it('has no errors in the demo, and flags duplicate gestures', () => {
     const project = demoProject()
     expect(lintProject(project).filter((p) => p.level === 'error')).toEqual([])

@@ -1,4 +1,4 @@
-// Port of smartmirror/core (StateManager + navigation + widget events + the drawing widget's
+// Port of glasscube/core (StateManager + navigation + widget events + the drawing widget's
 // handle_gesture), running a studio project the way the mirror will.
 import type { WidgetRuntime } from '../mirror/MirrorScreen'
 import type { Project, WidgetInstance } from '../model/project'
@@ -8,7 +8,7 @@ import { isNavigableContent, navigateText } from './textWidget'
 
 type WidgetBinding = { handler: 'nav' | 'scroll' | 'drag_start' | 'drag_move' | 'drag_end'; target: 'navigable' | 'draggable' | 'none'; h?: number; v?: number; cooldownKey?: string; cooldownConfig?: 'swipe_cooldown' | 'scroll_cooldown' }
 
-// smartmirror/config/json_config/default_widget_event_bindings.json
+// glasscube/config/json_config/default_widget_event_bindings.json
 const WIDGET_BINDINGS: Record<string, WidgetBinding> = {
   swipe_left: { handler: 'nav', target: 'navigable', h: 1, v: 0, cooldownKey: 'horizontal', cooldownConfig: 'swipe_cooldown' },
   swipe_right: { handler: 'nav', target: 'navigable', h: -1, v: 0, cooldownKey: 'horizontal', cooldownConfig: 'swipe_cooldown' },
@@ -21,7 +21,7 @@ const WIDGET_BINDINGS: Record<string, WidgetBinding> = {
   pinch_end: { handler: 'drag_end', target: 'none' },
 }
 
-// smartmirror/widgets/drawing.py
+// glasscube/widgets/drawing.py
 const DRAW_COLORS = ['#d5d5d5', '#fd7a33', '#ab32ac', '#3fd16b', '#3fa9f5', '#ffd23f']
 const DRAW_SIZES = [1, 2, 4, 6]
 const DRAW_GESTURES = ['left_click', 'swipe_left', 'swipe_right', 'swipe_up', 'two_fingers_swipe_up']

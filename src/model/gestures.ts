@@ -1,4 +1,4 @@
-// The computer-vision moves the SDK recognizes (smartmirror/vision/gestures/), as edge triggers.
+// The computer-vision moves the SDK recognizes (glasscube/vision/gestures/), as edge triggers.
 // Only discrete events are offered for edges and bindings: a continuous gesture's
 // *_update events fire every frame and would flip pages back and forth.
 

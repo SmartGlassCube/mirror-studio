@@ -30,7 +30,7 @@ export function downloadText(filename: string, text: string, type: string) {
 
 export function fileName(project: Project, format: ExportFormat) {
   const base = project.name.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'mirror'
-  return `${base}.smartmirror.${format === 'json' ? 'json' : 'yaml'}`
+  return `${base}.glasscube.${format === 'json' ? 'json' : 'yaml'}`
 }
 
 export class ImportError extends Error {}
@@ -47,7 +47,8 @@ export function parseProject(text: string): Project {
     throw new ImportError(`Not valid JSON or YAML: ${(error as Error).message}`)
   }
   if (!isObject(raw)) throw new ImportError('The file is not a project.')
-  if (raw.format !== PROJECT_FORMAT) throw new ImportError(`Not a Smart Mirror Studio project (format should be "${PROJECT_FORMAT}").`)
+  // 'smartmirror-project': files exported before the SDK was renamed glasscube.
+  if (raw.format !== PROJECT_FORMAT && raw.format !== 'smartmirror-project') throw new ImportError(`Not a Smart Mirror Studio project (format should be "${PROJECT_FORMAT}").`)
   if (typeof raw.version !== 'number' || raw.version > PROJECT_VERSION) {
     throw new ImportError(`This project was made by a newer studio (version ${String(raw.version)}).`)
   }

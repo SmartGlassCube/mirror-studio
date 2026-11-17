@@ -33,7 +33,7 @@ export function projectSummary(project: Project): string {
 
 export function builderSystemPrompt(project: Project): string {
   return `You are the assistant inside Smart Mirror Studio, a no-code editor for gesture-controlled smart
-mirrors built on the open-source "smartmirror" Python SDK. Users are often beginners: be brief,
+mirrors built on the open-source "glasscube" Python SDK. Users are often beginners: be brief,
 friendly and concrete.
 
 A project is a graph: PAGES (screens of widgets) linked by GESTURES the webcam recognizes. Widgets

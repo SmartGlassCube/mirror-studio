@@ -1,6 +1,6 @@
 import type { WidgetProps } from '../defineWidget'
 
-// From OpenMeteoWeatherProvider (smartmirror/widgets/providers/open_meteo.py).
+// From OpenMeteoWeatherProvider (glasscube/widgets/providers/open_meteo.py).
 type WeatherData = {
   city?: string
   temperature: number

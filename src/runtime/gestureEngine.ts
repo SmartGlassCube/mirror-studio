@@ -1,4 +1,4 @@
-// A line-by-line port of the SDK's gesture pipeline (smartmirror/vision/gesture_detector.py and
+// A line-by-line port of the SDK's gesture pipeline (glasscube/vision/gesture_detector.py and
 // gestures/*.py), so what fires here fires on the mirror. Keep the numbers in sync with the SDK.
 
 export type Side = 'left' | 'right'
