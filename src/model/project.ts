@@ -1,5 +1,6 @@
 // The studio's project: everything needed to rebuild a mirror. Saved in the browser, exported as
-// JSON or YAML, and (from glasscube 0.2.0) run on a real mirror by `glasscube run <file>`.
+// JSON or YAML, and run on a real mirror by `glasscube run <file>` (glasscube >= 0.2.0,
+// Smart-Mirror-SDK backend/glasscube/project.py).
 // Mapping to the SDK: pages = graph nodes, edges = graph edges, bindings = StateManager
 // event_bindings, widgets = BaseWidget(widget_type, position, content, metadata=props, data_provider).
 

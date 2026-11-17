@@ -66,7 +66,15 @@ call Google straight from the browser, so their key never reaches the server.
 | `widgetTypes[]` (`source` TSX + `compiled` JS in exports) | a frontend widget loaded at runtime |
 | `settings.gestureConfig` | `StateManager(gesture_config=…)` |
 
-`glasscube run <file>` (planned for SDK 0.2.0) will run an exported file on a real mirror.
+Run an exported file on a real mirror with the SDK (0.2.0 or newer):
+
+```bash
+pip install -U glasscube
+glasscube run my-mirror.glasscube.json
+```
+
+The SDK's `glasscube/project.py` reads it; each custom widget's `compiled` code is sent to the
+mirror's UI, which loads it at runtime.
 
 ## Layout
 
